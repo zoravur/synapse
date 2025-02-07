@@ -8,6 +8,15 @@ const getUserOS = () => {
     return "Unknown";
 }
 
+function mapObjectValues(obj: Record<string, any>, fn: (arg0: any) => any) {
+    const res:any = {};
+    for (let key in obj) {
+        res[key] = fn(obj[key]);
+    }
+    return res;
+}
+
 export {
     getUserOS,
+    mapObjectValues,
 }

@@ -1,5 +1,7 @@
 {
     "version": "0.0.1",
-    "description": "Synaps hotkey mapping for macOS keyboards",
-    "hotkeys": []
+    "description": "Synapse hotkey mapping for macOS keyboards",
+    "keymap": [
+        {"key": "Shift+Meta+p", "command": "TOGGLE_SEARCH_MODAL"}
+    ]
 }

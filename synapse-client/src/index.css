@@ -70,41 +70,149 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
-
+@layer base {
+  :root {
+    --background: 150 44% 96%;
+    --foreground: 278 45% 20%;
+    
+    --card: 150 44% 97%;
+    --card-foreground: 278 45% 20%;
+    
+    --popover: 150 44% 97%;
+    --popover-foreground: 278 45% 20%;
+    
+    --primary: 93 32% 41%;
+    --primary-foreground: 150 44% 96%;
+    
+    --secondary: 150 67% 89%;
+    --secondary-foreground: 278 45% 20%;
+    
+    --muted: 150 44% 92%;
+    --muted-foreground: 278 45% 40%;
+    
+    --accent: 37 100% 51%;
+    --accent-foreground: 278 45% 20%;
+    
+    --destructive: 347 82% 49%;
+    --destructive-foreground: 150 44% 96%;
+    
+    --border: 150 44% 86%;
+    --input: 150 44% 86%;
+    --ring: 93 32% 41%;
+    
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 278 45% 12%;
+    --foreground: 150 44% 96%;
+    
+    --card: 278 45% 15%;
+    --card-foreground: 150 44% 96%;
+    
+    --popover: 278 45% 15%;
+    --popover-foreground: 150 44% 96%;
+    
+    --primary: 93 32% 41%;
+    --primary-foreground: 150 44% 96%;
+    
+    --secondary: 278 45% 25%;
+    --secondary-foreground: 150 44% 96%;
+    
+    --muted: 278 45% 20%;
+    --muted-foreground: 150 44% 80%;
+    
+    --accent: 37 100% 51%;
+    --accent-foreground: 278 45% 12%;
+    
+    --destructive: 347 82% 49%;
+    --destructive-foreground: 150 44% 96%;
+    
+    --border: 278 45% 25%;
+    --input: 278 45% 25%;
+    --ring: 93 32% 41%;
+  }
+}
+/* 
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 240 71% 18%; /* Your purple as text color */
+    --foreground: 240 71% 18%;
     
-    --card: 0 0% 100%;
+    --card: 0 0% 98%;
     --card-foreground: 240 71% 18%;
- 
+    
     --popover: 0 0% 100%;
     --popover-foreground: 240 71% 18%;
- 
-    --primary: 240 71% 18%; /* Your purple #18104E */
+    
+    --primary: 240 71% 18%;
     --primary-foreground: 0 0% 100%;
- 
-    --secondary: 184 52% 67%; /* Your turquoise #8BCDCC */
+    
+    --secondary: 184 52% 67%;
     --secondary-foreground: 240 71% 18%;
- 
-    --accent: 65 100% 48%; /* Your yellow #DEF700 */
+    
+    --accent: 65 100% 48%;
     --accent-foreground: 240 71% 18%;
- 
+    
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
- 
+    
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
- 
+    
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 240 71% 18%;
- 
+    
     --radius: 0.5rem;
+    
+    --sidebar-background: 0 0% 98%;
+    
+    --sidebar-foreground: 240 5.3% 26.1%;
+    
+    --sidebar-primary: 240 5.9% 10%;
+    
+    --sidebar-primary-foreground: 0 0% 98%;
+    
+    --sidebar-accent: 240 4.8% 95.9%;
+    
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    
+    --sidebar-border: 220 13% 91%;
+    
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
-}
 
+  .dark {
+    --background: 240 71% 12%;     
+    --foreground: 210 40% 98%;
+    
+    --card: 240 71% 14%;           
+    --card-foreground: 210 40% 98%;
+    
+    --popover: 240 71% 14%;
+    --popover-foreground: 210 40% 98%;
+    
+    --primary: 240 71% 18%;       
+    --primary-foreground: 210 40% 98%;
+    
+    --secondary: 184 52% 67%;       
+    --secondary-foreground: 240 71% 18%;
+    
+    --accent: 65 100% 48%;          
+    --accent-foreground: 240 71% 18%;
+    
+    --muted: 240 71% 16%;         
+    --muted-foreground: 215 20.2% 65.1%;
+    
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    
+    --border: 240 71% 24%;         
+    --input: 240 71% 24%;
+    --ring: 184 52% 67%;                  --sidebar-background: 240 5.9% 10%;          --sidebar-foreground: 240 4.8% 95.9%;          --sidebar-primary: 224.3 76.3% 48%;          --sidebar-primary-foreground: 0 0% 100%;          --sidebar-accent: 240 3.7% 15.9%;          --sidebar-accent-foreground: 240 4.8% 95.9%;          --sidebar-border: 240 3.7% 15.9%;          --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+} 
 
 /* @layer base {
   :root {

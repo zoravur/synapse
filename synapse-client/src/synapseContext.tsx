@@ -9,9 +9,9 @@ function SynapseProvider({children}: React.PropsWithChildren) {
 
     return (
         <SynapseContext.Provider value={store}>
-            <SynapseDispatchContext value={dispatch}>
+            <SynapseDispatchContext.Provider value={dispatch}>
                 {children}
-            </SynapseDispatchContext>
+            </SynapseDispatchContext.Provider>
         </SynapseContext.Provider>
     )
 }
@@ -23,12 +23,19 @@ function useSynapseSelector<V>(selector: Selector<V>) {
     if (state !== null) {
         return selector(state);
     } else {
-        throw new Error(`useSynapseSelector used on null state`);
+        console.error(`useSynapseSelector used on null state`);
+        // throw new Error(`useSynapseSelector used on null state`);
     }
 }
 
 function useSynapseDispatch() {
-    return useContext(SynapseDispatchContext);
+    const dispatch = useContext(SynapseDispatchContext);
+    if (dispatch !== null) {
+        return dispatch;
+    } else {
+        console.error(`useSynapseDispatch used on null dispatch`)
+        // throw new Error(`useSynapseDispatch used on null dispatch`);
+    }
 }
 
 export {

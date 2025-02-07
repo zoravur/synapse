@@ -24,7 +24,8 @@ type Action = typeof actions[number];
  * The top level reducer.
  */
 const reducer: React.Reducer<State, Action> = (state, action) => {
-switch (action.type) {
+  // console.log('ACTION:', action, action.type);
+  switch (action.type) {
     case 'TOGGLE_SEARCH_MODAL': {
       return {
         ...state,
