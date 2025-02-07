@@ -28,7 +28,6 @@ const DocumentWrapper = () => {
 function App() {
   return (
     <div>
-
       <SynapseProvider>
         <HotKeyProvider>
           <BrowserRouter>
