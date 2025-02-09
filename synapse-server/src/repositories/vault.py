@@ -59,7 +59,9 @@ class VaultManager:
         """
         print(f'{relative_path=}')
         safe_path = (self.vault_dir / relative_path).resolve()
+        print(f'{safe_path=},{relative_path=}')
         if not str(safe_path).startswith(str(self.vault_dir.resolve())):
+            # print(f"INVALID PATH")
             raise InvalidPathError(f"Path {relative_path} attempts to escape vault")
         return safe_path
 
@@ -75,17 +77,21 @@ class VaultManager:
         if not path.suffix in [".md", ".chat"]:
             raise UnsupportedFileTypeError(f"File type {path.suffix} not supported")
 
-    def _get_path_info(self, path: Path, include_content: bool = True, max_depth: int = -1) -> Union[FileInfo, DirectoryInfo]:
+    def _get_path_info(self, path: Path, include_content: bool = True, max_depth: Optional[int] = None) -> Union[FileInfo, DirectoryInfo]:
         """Get metadata about a file or directory.
         
         Args:
             path: Path to get info for
             include_content: Whether to include file contents
-            max_depth: Maximum recursion depth for directories (-1 for unlimited)
+            max_depth: Maximum recursion depth for directories (None for unlimited)
             
         Returns:
             Dictionary containing path metadata
         """
+        if max_depth == None:
+            max_depth = float('inf') # maybe this is bad, I don't care though
+        if max_depth == -1:
+            return None
         stat = path.stat()
         base_info = {
             "path": str(path.relative_to(self.vault_dir)),
@@ -100,17 +106,16 @@ class VaultManager:
                 size=stat.st_size,
                 content=path.read_text() if include_content else None
             )
-        elif path.is_dir() and (max_depth != 0):
+        elif path.is_dir() and (max_depth >= 0):
             children = []
-            if max_depth != 0:
-                for child in path.iterdir():
-                    children.append(
-                        self._get_path_info(
-                            child, 
-                            include_content=include_content,
-                            max_depth=max_depth - 1 if max_depth > 0 else -1
-                        )
-                    )
+            for child in path.iterdir():
+                path_info = self._get_path_info(
+                    child, 
+                    include_content=include_content,
+                    max_depth=max_depth - 1
+                )
+                if path_info is not None:
+                    children.append(path_info)
             return DirectoryInfo(
                 **base_info,
                 type="directory",
@@ -130,18 +135,20 @@ class VaultManager:
             PathNotFoundError: If file doesn't exist
             UnsupportedFileTypeError: If file type not supported
         """
+
+        # print("GETTING DOCUMENT 138")
         file_location = self._get_safe_path(document_path)
         if not file_location.exists() or not file_location.is_file():
             raise PathNotFoundError(f"File {document_path} not found")
         self._validate_file_type(file_location)
         return self._get_path_info(file_location)
 
-    def list_directory(self, dir_path: str = "", max_depth: int = -1) -> DirectoryInfo:
+    def list_directory(self, dir_path: str = "", max_depth: int = None) -> DirectoryInfo:
         """List contents of a directory recursively.
         
         Args:
             dir_path: Directory path relative to vault root
-            max_depth: Maximum recursion depth (-1 for unlimited)
+            max_depth: Maximum recursion depth (None for unlimited)
             
         Returns:
             Directory tree information

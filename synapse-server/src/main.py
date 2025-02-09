@@ -8,13 +8,15 @@ from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
 from fastapi.staticfiles import StaticFiles
 
-from .api.vault_router import vault_router
+from .settings import get_settings
+
+from .api.vault_router import vault_router, VaultError, vault_exception_handler
 
 app = FastAPI(docs_url=None)
 
 app.mount("/static", StaticFiles(directory="public"), name="static")
-app.include_router(vault_router, prefix="/d")
-# vault_dir = Path(os.environ['VAULT_DIR'])
+app.include_router(vault_router, prefix="/api/v1/d", dependencies=[Depends(get_settings)])
+app.add_exception_handler(VaultError, vault_exception_handler)
 
 @app.get("/")
 def read_root():
@@ -36,4 +38,3 @@ async def custom_swagger_ui():
         title="My API Docs",
         swagger_favicon_url="/static/favicon-96x96.png",  # Custom favicon URL
     )
-

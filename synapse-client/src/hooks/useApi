@@ -1,0 +1,36 @@
+/**
+ * This hook queries the API and returns a 
+ */
+import { useState, useEffect, useCallback } from "react";
+
+const REQUEST_STATE = {
+  IDLE: "idle",
+  LOADING: "loading",
+  SUCCESS: "success",
+  ERROR: "error",
+};
+
+export function useQuery(queryFn, deps = []) {
+  const [state, setState] = useState({
+    status: REQUEST_STATE.IDLE,
+    data: null,
+    error: null,
+  });
+
+  const execute = useCallback(async () => {
+    setState({ status: REQUEST_STATE.LOADING, data: null, error: null });
+
+    try {
+      const data = await queryFn();
+      setState({ status: REQUEST_STATE.SUCCESS, data, error: null });
+    } catch (error) {
+      setState({ status: REQUEST_STATE.ERROR, data: null, error });
+    }
+  }, deps);
+
+  useEffect(() => {
+    execute();
+  }, [execute]);
+
+  return { ...state, refetch: execute };
+}

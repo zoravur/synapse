@@ -132,7 +132,25 @@ button:focus-visible {
     --input: 278 45% 25%;
     --ring: 93 32% 41%;
   }
+
+  .prose {
+    --tw-prose-body: #1e293b;
+    --tw-prose-headings: #0f172a;
+    --tw-prose-links: #2563eb;
+    --tw-prose-bold: #334155;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .dark .prose {
+    --tw-prose-body: #e2e8f0;
+    --tw-prose-headings: #f1f5f9;
+    --tw-prose-links: #60a5fa;
+    --tw-prose-bold: #f8fafc;
+    --tw-prose-code: #a78bfa;
+  }
 }
+
+
 /* 
 @layer base {
   :root {

@@ -3,26 +3,32 @@ import SearchModal from '@/components/SearchModal';
 import { SynapseProvider } from '@/synapseContext';
 import HotKeyProvider from './providers/HotKeyProvider';
 import Layout from './layouts/Layout';
-import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useParams, useLocation } from 'react-router-dom';
 
 import './App.css'
 import NewTab from './containers/NewTab';
 import Settings from './containers/Settings';
+import Editor from './components/Editor';
 
 
 // Wrapper component for handling unified document paths
 const DocumentWrapper = () => {
   // Get the complete path including any slashes
-  const { '*': docPath } = useParams();
+  const docPath = useLocation().pathname;
 
   // Determine if this is a chat based on file extension or metadata
   const isChat = docPath.endsWith('.chat'); // or however you want to distinguish
 
-  return isChat ? (
-    <ChatRenderer docPath={docPath} />
-  ) : (
-    <PageRenderer docPath={docPath} />
-  );
+  if (docPath.endsWith('.chat')) return <ChatRenderer docPath={docPath} />
+  else if (docPath.endsWith('.md')) return <Editor filePath={docPath} />
+  else return <div>Unsupported document: {docPath}</div>
+
+
+  // return isChat ? (
+  //   <ChatRenderer docPath={docPath} />
+  // ) : (
+  //   // <PageRenderer docPath={docPath} />
+  // );
 };
 
 function App() {
