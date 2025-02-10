@@ -62,17 +62,7 @@ code {
     white-space: pre-wrap;
 }
 
-
-
 /* .editor:: */
 .editor:focus-within {
     outline: none;
 }
-
-.editor > * {
-    outline: none;
-}
-
-/* .editor {
-    outline: none;
-} */

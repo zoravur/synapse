@@ -10,7 +10,6 @@ import NewTab from './containers/NewTab';
 import Settings from './containers/Settings';
 import Editor from './components/Editor';
 
-
 // Wrapper component for handling unified document paths
 const DocumentWrapper = () => {
   // Get the complete path including any slashes
