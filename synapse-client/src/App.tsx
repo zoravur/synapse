@@ -3,23 +3,27 @@ import SearchModal from '@/components/SearchModal';
 import { SynapseProvider } from '@/synapseContext';
 import HotKeyProvider from './providers/HotKeyProvider';
 import Layout from './layouts/Layout';
-import { BrowserRouter, Routes, Route, useParams, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useParams, useLocation, Navigate, } from 'react-router-dom';
 
 import './App.css'
 import NewTab from './containers/NewTab';
 import Settings from './containers/Settings';
-import Editor from './components/Editor';
+import { EditorWrapper } from './features/editor';
 
 // Wrapper component for handling unified document paths
 const DocumentWrapper = () => {
   // Get the complete path including any slashes
-  const docPath = useLocation().pathname;
+  const {'*': docPath} = useParams();
+
+  if (!docPath) {
+    throw new Error(`docPath is falsy; docPath=${docPath}. Ensure empty vault paths are redirected appropriately`);
+  }
 
   // Determine if this is a chat based on file extension or metadata
-  const isChat = docPath.endsWith('.chat'); // or however you want to distinguish
+  // const isChat = docPath.endsWith('.chat'); // or however you want to distinguish
 
   if (docPath.endsWith('.chat')) return <ChatRenderer docPath={docPath} />
-  else if (docPath.endsWith('.md')) return <Editor filePath={docPath} />
+  else if (docPath.endsWith('.md')) return <EditorWrapper filePath={docPath} />
   else return <div>Unsupported document: {docPath}</div>
 
 
@@ -42,6 +46,7 @@ function App() {
                 {/* Welcome page */}
                 <Route path="/" element={<NewTab />} />
 
+                <Route path="/d" element={<Navigate to="/" replace />} />
                 {/* Unified document handler - works for both pages and chats */}
                 <Route path="/d/*" element={<DocumentWrapper />} />
 
